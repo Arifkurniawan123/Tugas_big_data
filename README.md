@@ -43,7 +43,8 @@ start .  // untuk membuka lokasi folder di File Explorer
 
 ### ✏️ Isi dengan kode berikut:
 
-``from pyspark.sql import SparkSession
+```python
+from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, avg, when, month, year, max as max_, concat_ws
 
 # Inisialisasi Spark Session
@@ -112,11 +113,12 @@ df_kondisi = df.withColumn(
 )
 
 df_kondisi.groupBy("kondisi_cuaca").count().orderBy("count", ascending=False) \
-  .write.csv("output/jumlah_kondisi_cuaca", header=True, mode="overwrite")
+          .write.csv("output/jumlah_kondisi_cuaca", header=True, mode="overwrite")
 
-# ===================================================================
 # Selesai
 spark.stop()
+```
+
 
 ```
 
