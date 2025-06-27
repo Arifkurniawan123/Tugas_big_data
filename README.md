@@ -126,11 +126,20 @@ pip install pandas matplotlib seaborn
 
 ---
 
+
 ## Langkah 7: Visualisasi Hasil Analisis
+
+### 📦 Pastikan Library Visualisasi Terinstal
+
+```bash
+pip install pandas matplotlib seaborn
+```
+
+---
 
 ### A. Rata-Rata Suhu Harian
 
-**File:** `Visualisasi_rata_rata_suhu.py`  
+```python
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -152,11 +161,13 @@ plt.ylabel("Suhu Rata-rata (C)")
 plt.tight_layout()
 plt.savefig("visualisasi/rata_rata_suhu_harian.png")
 plt.close()
+```
 
+---
 
 ### B. Hari Suhu Ekstrem
 
-**File:** `visualisasi_suhu_ekstrem.py`  
+```python
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -170,23 +181,18 @@ sns.set(style="whitegrid")
 extreme_files = glob.glob("output/hari_suhu_ekstrem/part-*.csv")
 if extreme_files:
     df_extreme = pd.concat([pd.read_csv(f, header=None, names=["Keterangan"]) for f in extreme_files])
-
-    # Filter hanya baris yang mengandung suhu dan tanggal
     pattern_max = r"maksimum tertinggi: (\d{4}-\d{2}-\d{2}).*\(([-+]?\d+\.\d+)"
     pattern_min = r"minimum terendah: (\d{4}-\d{2}-\d{2}).*\(([-+]?\d+\.\d+)"
-    
     max_match = df_extreme["Keterangan"].str.extract(pattern_max).dropna()
     min_match = df_extreme["Keterangan"].str.extract(pattern_min).dropna()
 
     if not max_match.empty and not min_match.empty:
-        # Buat DataFrame final
         data = pd.DataFrame({
             "Jenis": ["Suhu Maksimum Tertinggi", "Suhu Minimum Terendah"],
             "Tanggal": [max_match.iloc[0, 0], min_match.iloc[0, 0]],
             "Suhu": [float(max_match.iloc[0, 1]), float(min_match.iloc[0, 1])]
         })
 
-        # Visualisasi
         plt.figure(figsize=(8, 5))
         sns.barplot(data=data, x="Suhu", y="Jenis", palette="coolwarm")
         for i in range(len(data)):
@@ -197,15 +203,13 @@ if extreme_files:
         plt.tight_layout()
         plt.savefig("visualisasi/suhu_ekstrem.png")
         plt.close()
-        print("✅ Visualisasi suhu ekstrem berhasil dibuat.")
-    else:
-        print("⚠️ Tidak ditemukan data suhu ekstrem valid.")
-else:
-    print("[!] File suhu ekstrem tidak ditemukan.")
+```
 
+---
 
 ### C. Suhu Maksimum Bulanan
-**File:** `visualisasi_suhu_maksimum_per_bulan.py`  
+
+```python
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -230,33 +234,29 @@ plt.ylabel("Suhu Maksimum (°C)")
 plt.tight_layout()
 plt.savefig("visualisasi/suhu_maksimum_per_bulan.png")
 plt.close()
-print("✅ Gambar suhu maksimum per bulan berhasil disimpan.")
+```
 
+---
 
-### D. Rata-rata Kecepatan Angin per Cuaca
+### D. Rata-Rata Angin per Jenis Cuaca
 
-**File:** `visualisasi_rata_rata_angin.py`  
+```python
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import glob
 import os
 
-# Pastikan folder output visualisasi tersedia
 os.makedirs("visualisasi", exist_ok=True)
 sns.set(style="whitegrid")
 
-# Ambil file hasil Spark
 wind_files = glob.glob("output/rata_rata_angin_per_cuaca/part-*.csv")
-
 if wind_files:
-    # Baca file tanpa header → beri nama kolom
     df_wind = pd.concat([
         pd.read_csv(f, header=None, names=["cuaca", "rata_rata_angin"])
         for f in wind_files
     ])
 
-    # Visualisasi
     plt.figure(figsize=(10, 5))
     sns.barplot(data=df_wind, x="cuaca", y="rata_rata_angin", palette="Blues_d")
     plt.title("Rata-rata Kecepatan Angin per Jenis Cuaca")
@@ -265,35 +265,29 @@ if wind_files:
     plt.tight_layout()
     plt.savefig("visualisasi/rata_rata_angin_per_cuaca.png")
     plt.close()
-    print("✅ Visualisasi angin per cuaca berhasil disimpan.")
-else:
-    print("⚠️ Data angin per cuaca tidak ditemukan.")
+```
 
+---
 
-### E. Jumlah Kondisi Cuaca
+### E. Frekuensi Kondisi Cuaca
 
-**File:** `visualisasi_jumlah_hari_hujan.py`  
+```python
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import glob
 import os
 
-# Pastikan folder visualisasi tersedia
 os.makedirs("visualisasi", exist_ok=True)
 sns.set(style="whitegrid")
 
-# Ambil semua file hasil Spark
 weather_count_files = glob.glob("output/jumlah_kondisi_cuaca/part-*.csv")
-
 if weather_count_files:
-    # Baca file tanpa header → beri nama kolom manual
     df_weather = pd.concat([
         pd.read_csv(f, header=None, names=["kondisi_cuaca", "count"])
         for f in weather_count_files
     ])
 
-    # Visualisasi bar chart
     plt.figure(figsize=(10, 5))
     sns.barplot(data=df_weather, x="kondisi_cuaca", y="count", palette="Set2")
     plt.title("Frekuensi Masing-masing Kondisi Cuaca")
@@ -302,7 +296,4 @@ if weather_count_files:
     plt.tight_layout()
     plt.savefig("visualisasi/frekuensi_kondisi_cuaca.png")
     plt.close()
-    print("✅ Visualisasi cuaca berhasil disimpan.")
-else:
-    print("⚠️ File cuaca tidak ditemukan.")
-
+```
