@@ -132,12 +132,12 @@ pip install pandas matplotlib seaborn
 ### 📦 Pastikan Library Visualisasi Terinstal
 
 ```bash
-pip install pandas matplotlib seaborn
+pip list
 ```
 
 ---
 
-### A. Rata-Rata Suhu Harian
+### A. Visualisasi_rata_rata_suhu.py
 
 ```python
 import pandas as pd
@@ -165,7 +165,7 @@ plt.close()
 
 ---
 
-### B. Hari Suhu Ekstrem
+### B. visualisasi_suhu_ekstrem.py
 
 ```python
 import pandas as pd
@@ -207,8 +207,7 @@ if extreme_files:
 
 ---
 
-### C. Suhu Maksimum Bulanan
-
+### C.visualisasi_suhu_maksimum_per_bulan.py
 ```python
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -238,7 +237,7 @@ plt.close()
 
 ---
 
-### D. Rata-Rata Angin per Jenis Cuaca
+### D.visualisasi_rata_rata_angin.py
 
 ```python
 import pandas as pd
@@ -269,7 +268,7 @@ if wind_files:
 
 ---
 
-### E. Frekuensi Kondisi Cuaca
+### E. visualisasi_jumlah_hari_hujan.py
 
 ```python
 import pandas as pd
